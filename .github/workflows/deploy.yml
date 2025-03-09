@@ -1,0 +1,40 @@
+name: Deploy to Tencent Cloud Webify
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+        env:
+          NEXT_PUBLIC_SITE_URL: ${{ secrets.NEXT_PUBLIC_SITE_URL }}
+          NEXT_PUBLIC_SITE_NAME: "短剧调色培训"
+
+      - name: Install Tencent Cloud CLI
+        run: npm install -g @tencent/tcloud-cli
+
+      - name: Deploy to Tencent Cloud Webify
+        run: |
+          echo "${{ secrets.TCLOUD_CONFIG }}" > ~/.tcloudrc
+          tcloud-cli webify deploy --env=production
+        env:
+          TCLOUD_SECRET_ID: ${{ secrets.TCLOUD_SECRET_ID }}
+          TCLOUD_SECRET_KEY: ${{ secrets.TCLOUD_SECRET_KEY }}
