@@ -1,0 +1,4 @@
+# 不忽略这些文件
+!.nvmrc
+!.node-version
+!.npmrc 

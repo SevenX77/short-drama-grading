@@ -1,0 +1,24 @@
+{
+	"version": "2.0",
+	"$schema": "https://framework-1258016615.tcloudbaseapp.com/schema/latest.json",
+	"envId": "{{envId}}",
+	"framework": {
+		"name": "short-drama-grading",
+		"plugins": {
+			"client": {
+				"use": "@cloudbase/framework-plugin-website",
+				"inputs": {
+					"buildCommand": "npm run export",
+					"outputPath": "out",
+					"installCommand": "npm install",
+					"httpPath": "/",
+					"nodeVersion": "18.x",
+					"envVariables": {
+						"NODE_VERSION": "18.x",
+						"EXPORT": "true"
+					}
+				}
+			}
+		}
+	}
+}

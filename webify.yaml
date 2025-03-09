@@ -1,0 +1,30 @@
+framework: nextjs
+buildCommand: npm run export
+outputDirectory: out
+nodeVersion: 18.x
+
+# 环境变量
+environments:
+  - name: production
+    envs:
+      NEXT_PUBLIC_SITE_URL: https://short-drama-grading.webify.cloudbase.net
+      NEXT_PUBLIC_SITE_NAME: 短剧调色培训
+      NODE_VERSION: 18.x
+      EXPORT: "true"
+
+# 区域设置
+region: ap-shanghai
+
+# 路由重写规则
+routes:
+  - src: /(.*)
+    dest: /$1
+
+# 缓存配置
+cache:
+  - src: /_next/static/(.*)
+    headers:
+      cache-control: public,max-age=31536000,immutable
+  - src: /images/(.*)
+    headers:
+      cache-control: public,max-age=86400
